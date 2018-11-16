@@ -7,7 +7,7 @@
         http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
         http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
-    <context:property-placeholder location="classpath:config/application.properties" />
+    <context:property-placeholder location="classpath:config/*.properties" />
 	<context:component-scan base-package="cn.yunding,org.n3r.idworker"/>
 	<mvc:annotation-driven/>
 	<mvc:annotation-driven>
@@ -23,5 +23,10 @@
 	    </bean>
 	  </mvc:message-converters>  
 	</mvc:annotation-driven>
+	<bean id="multipartResolver" class=
+			"org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<!--这里的单位是字节-->
+		<property name="maxUploadSize" value="1048576"/>
+	</bean>
 
 </beans>
