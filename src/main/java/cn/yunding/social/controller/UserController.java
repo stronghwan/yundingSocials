@@ -22,7 +22,7 @@ import java.util.Date;
 import java.util.Random;
 
 /**
- * @TODO
+ * 登陆注册修改个人信息
  * @Author stronghwan
  * @Verison
  * @Date2018/11/9-20-09
@@ -93,7 +93,6 @@ public class UserController {
     @RequestMapping(value = "/user/login.do", method = RequestMethod.POST)
     public YDResult login(@RequestBody Users users) throws Exception {
         if (StringUtils.isNotBlank(users.getIct()) && StringUtils.isNotBlank(users.getPassword())){
-            // todo ict登录
             users.setPassword(MD5Utils.getMD5Str(users.getPassword()));
             Users usersIct = userService.userLoginByIct(users);
             if (usersIct != null){
@@ -105,7 +104,6 @@ public class UserController {
             }
         }
         if (StringUtils.isNotBlank(users.getPhone()) && StringUtils.isNotBlank(users.getPassword())){
-            // todo phone登录
             users.setPassword(MD5Utils.getMD5Str(users.getPassword()));
             Users usersPhone = userService.userLoginByPhone(users);
             if (usersPhone != null){
@@ -214,7 +212,7 @@ public class UserController {
                 Users users = new Users();
                 users.setFace(path);
                 users.setPhone(phone);
-//                userService.updateUserInfo(users);
+                userService.updateUserInfo(users);
                 System.out.println(url);
                 return YDResult.ok(url);
             }else {

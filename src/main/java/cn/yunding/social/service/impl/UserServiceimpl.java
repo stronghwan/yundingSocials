@@ -61,7 +61,7 @@ public class UserServiceimpl implements UserService{
     @Value("${qrCode_url}")
     private String qrCode_url;
 
-    @Value("{IMAGE_URL}")
+    @Value("${IMAGE_URL}")
     private String IMAGE_URL;
 
     @Override
@@ -103,14 +103,18 @@ public class UserServiceimpl implements UserService{
         users.setId(id);
         users.setPhone(userBo.getPhone());
         // todo 自动生成一个二维码
-        String path = "qrcode/"+users.getId()+"qrcode.png";
+        String path = users.getId()+"qrcode.png";
         String url = qrCode_url+path;
-        qrCodeUtils.createQRCode(qrCode_url+users.getId()+"qrcode.png","qrcode:"+users.getPhone());
+        qrCodeUtils.createQRCode(url,"qrcode:"+users.getPhone());
         MultipartFile multipartFile = FileUtils.fileToMultipart(url);
+        String originalFilename = multipartFile.getOriginalFilename();
+        System.out.println(originalFilename);
+        String urlResult = IMAGE_URL + "qrcode/"+path;
         Client client = new Client();
-        WebResource webResource = client.resource(url);
-        webResource.put(String.class,multipartFile.getBytes());
-        users.setQrcode("");
+        WebResource webResource = client.resource(urlResult);
+        webResource.put(String.class, multipartFile.getBytes());
+        System.out.println(urlResult);
+        users.setQrcode(urlResult);
         users.setPassword(userBo.getPassword());
         // todo 自动生成一个头像
         String faceUrl = IMAGE_URL+"upload/201811161610336754834.jpg";
@@ -169,7 +173,7 @@ public class UserServiceimpl implements UserService{
     public Users updatePassword(Users users) {
         Example example = new Example(Users.class);
         Example.Criteria criteria = example.createCriteria();
-        criteria.andEqualTo(users.getPhone());
+        criteria.andEqualTo("phone",users.getPhone());
         int i = usersMapper.updateByExampleSelective(users,example);
         Users userResult = usersMapper.selectOne(users);
         return userResult;
@@ -180,7 +184,7 @@ public class UserServiceimpl implements UserService{
     public Users updateUserInfo(Users users) {
         Example example = new Example(Users.class);
         Example.Criteria criteria = example.createCriteria();
-        criteria.andEqualTo("phone",users.getPhone());
+        criteria.andEqualTo("id",users.getId());
         int i = usersMapper.updateByExampleSelective(users,example);
         Users userResult = usersMapper.selectOne(users);
         return userResult;
