@@ -76,12 +76,6 @@
             <artifactId>spring-test</artifactId>
             <version>${spring.version}</version>
         </dependency>
-        <!-- dubbo相关 -->
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>dubbo</artifactId>
-            <version>${dubbo.version}</version>
-        </dependency>
         <dependency>
             <groupId>org.apache.zookeeper</groupId>
             <artifactId>zookeeper</artifactId>
@@ -150,11 +144,6 @@
             <groupId>com.alibaba</groupId>
             <artifactId>druid</artifactId>
             <version>${druid.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.csource.fastdfs</groupId>
-            <artifactId>fastdfs</artifactId>
-            <version>1.2</version>
         </dependency>
         <!-- 文件上传组件 -->
         <dependency>
@@ -256,6 +245,25 @@
             <artifactId>javase</artifactId>
             <version>3.3.3</version>
         </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+            <version>2.9.5</version>
+        </dependency>
+
+        <!-- 拼音转换的包 -->
+        <dependency>
+            <groupId>com.belerweb</groupId>
+            <artifactId>pinyin4j</artifactId>
+            <version>2.5.0</version>
+        </dependency>
+        <!--solr-->
+        <dependency>
+            <groupId>org.apache.solr</groupId>
+            <artifactId>solr-solrj</artifactId>
+            <version>7.2.1</version>
+        </dependency>
+
     </dependencies>
   <build>
     <finalName>yundingSocial</finalName>

@@ -1,21 +1,27 @@
 package cn.yunding.social.pojo;
 
+import javax.persistence.Column;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.Date;
-import javax.persistence.*;
 
 @Table(name = "t_friend_group")
 public class FriendGroup {
     /**
-     * 用户id
+     * id
      */
     @Id
+    private String id;
+
+    /**
+     * 用户id
+     */
     @Column(name = "user_id")
     private String userId;
 
     /**
      * 由该用户创建的组名
      */
-    @Id
     @Column(name = "group_name")
     private String groupName;
 
@@ -31,8 +37,23 @@ public class FriendGroup {
     @Column(name = "update_time")
     private Date updateTime;
 
-    @Column(name = "group_id")
-    private Integer groupId;
+    /**
+     * 获取id
+     *
+     * @return id - id
+     */
+    public String getId() {
+        return id;
+    }
+
+    /**
+     * 设置id
+     *
+     * @param id id
+     */
+    public void setId(String id) {
+        this.id = id;
+    }
 
     /**
      * 获取用户id
@@ -104,19 +125,5 @@ public class FriendGroup {
      */
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
-    }
-
-    /**
-     * @return group_id
-     */
-    public Integer getGroupId() {
-        return groupId;
-    }
-
-    /**
-     * @param groupId
-     */
-    public void setGroupId(Integer groupId) {
-        this.groupId = groupId;
     }
 }

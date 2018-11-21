@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.yunding.social.mapper.MyFriendMapper">
+
+    <select id="selectFriendAll" parameterType="cn.yunding.social.pojo.FriendRelationship"
+          resultType="cn.yunding.social.pojo.myPojo.FriendInfo">
+        SELECT
+            utof.user_id,
+            utof.friend_id,
+            utof.mark,
+            utof.group_name,
+            f.ict,
+            f.nickname,
+            f.phone,
+            f.sign_name,
+            f.face
+        FROM
+            t_friend_relationship AS utof
+        LEFT JOIN
+            users AS f
+        ON
+            utof.friend_id = f.id
+        WHERE
+            `user_id` = #{userId} AND `friend_id` = #{friendId};
+    </select>
+
+    <select id="selectNewFriendAll" resultType="cn.yunding.social.pojo.FriendApply"
+            parameterType="cn.yunding.social.pojo.myPojo.FriendApplyDisplay">
+        SELECT
+            apply.sender_id,
+            apply.notes,
+            apply.is_agree,
+            f.nickname,
+            f.face
+        FROM
+            t_friend_apply AS apply
+        LEFT JOIN
+            users AS f
+        ON
+            apply.sender_id = f.id
+        WHERE
+            `user_id` = #{userId};
+    </select>
+
+    <select id="selectFriendAllByGroup" parameterType="cn.yunding.social.pojo.FriendRelationship"
+            resultType="cn.yunding.social.pojo.myPojo.FriendInfo">
+        select
+            utof.user_id,
+            utof.friend_id,
+            utof.mark,
+            utof.group_name,
+            f.ict,
+            f.nickname,
+            f.phone,
+            f.sign_name,
+            f.face
+        from
+            t_friend_relationship AS utof
+        left join
+            users AS f
+        on
+            utof.friend_id= f.id
+        where
+            `user_id` = #{userId} and `group_name` = #{groupName};
+    </select>
+
+</mapper>

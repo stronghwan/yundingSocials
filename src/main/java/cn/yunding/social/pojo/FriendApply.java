@@ -1,21 +1,27 @@
 package cn.yunding.social.pojo;
 
+import javax.persistence.Column;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.Date;
-import javax.persistence.*;
 
 @Table(name = "t_friend_apply")
 public class FriendApply {
     /**
-     * 已登录用户id
+     * 好友申请记录id
      */
     @Id
+    private String id;
+
+    /**
+     * 已登录用户id
+     */
     @Column(name = "user_id")
     private String userId;
 
     /**
      * 好友验证申请人的id
      */
-    @Id
     @Column(name = "sender_id")
     private String senderId;
 
@@ -51,6 +57,24 @@ public class FriendApply {
      */
     @Column(name = "agree_time")
     private Date agreeTime;
+
+    /**
+     * 获取好友申请记录id
+     *
+     * @return id - 好友申请记录id
+     */
+    public String getId() {
+        return id;
+    }
+
+    /**
+     * 设置好友申请记录id
+     *
+     * @param id 好友申请记录id
+     */
+    public void setId(String id) {
+        this.id = id;
+    }
 
     /**
      * 获取已登录用户id

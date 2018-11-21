@@ -1,21 +1,27 @@
 package cn.yunding.social.pojo;
 
+import javax.persistence.Column;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.Date;
-import javax.persistence.*;
 
 @Table(name = "t_friend_relationship")
 public class FriendRelationship {
     /**
-     * 用户id
+     * id
      */
     @Id
+    private String id;
+
+    /**
+     * 用户id
+     */
     @Column(name = "user_id")
     private String userId;
 
     /**
      * 好友id
      */
-    @Id
     @Column(name = "friend_id")
     private String friendId;
 
@@ -25,9 +31,16 @@ public class FriendRelationship {
     private String mark;
 
     /**
+     * 是否可见朋友圈(0:不可见 默认1:可见)
+     */
+    @Column(name = "circle_is_see")
+    private Integer circleIsSee;
+
+    /**
      * 分组信息
      */
-    private String group;
+    @Column(name = "group_name")
+    private String groupName;
 
     /**
      * 创建日期
@@ -40,6 +53,24 @@ public class FriendRelationship {
      */
     @Column(name = "update_time")
     private Date updateTime;
+
+    /**
+     * 获取id
+     *
+     * @return id - id
+     */
+    public String getId() {
+        return id;
+    }
+
+    /**
+     * 设置id
+     *
+     * @param id id
+     */
+    public void setId(String id) {
+        this.id = id;
+    }
 
     /**
      * 获取用户id
@@ -96,21 +127,39 @@ public class FriendRelationship {
     }
 
     /**
+     * 获取是否可见朋友圈(0:不可见 默认1:可见)
+     *
+     * @return circle_is_see - 是否可见朋友圈(0:不可见 默认1:可见)
+     */
+    public Integer getCircleIsSee() {
+        return circleIsSee;
+    }
+
+    /**
+     * 设置是否可见朋友圈(0:不可见 默认1:可见)
+     *
+     * @param circleIsSee 是否可见朋友圈(0:不可见 默认1:可见)
+     */
+    public void setCircleIsSee(Integer circleIsSee) {
+        this.circleIsSee = circleIsSee;
+    }
+
+    /**
      * 获取分组信息
      *
-     * @return group - 分组信息
+     * @return group_name - 分组信息
      */
-    public String getGroup() {
-        return group;
+    public String getGroupName() {
+        return groupName;
     }
 
     /**
      * 设置分组信息
      *
-     * @param group 分组信息
+     * @param groupName 分组信息
      */
-    public void setGroup(String group) {
-        this.group = group;
+    public void setGroupName(String groupName) {
+        this.groupName = groupName;
     }
 
     /**
