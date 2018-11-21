@@ -40,20 +40,20 @@ public class UserController {
 
     /**
      * 发送验证码
-     * @param phone
+     * @param users
      * @return
      */
     @RequestMapping(value = "/user/sendCode.do",method = RequestMethod.POST)
-    public YDResult sendCode(String phone){
-        if (StringUtils.isBlank(phone)){
+    public YDResult sendCode(@RequestBody Users users){
+        if (StringUtils.isBlank(users.getPhone())){
             return YDResult.errorMsg("电话号不能为空");
         }
-        boolean isUser = userService.userCheckRepate(phone);
+        boolean isUser = userService.userCheckRepate(users.getPhone());
         if (!isUser){
             return YDResult.errorMsg("手机号已经注册");
         }
         try {
-            userService.createSmsCode(phone);
+            userService.createSmsCode(users.getPhone());
             return YDResult.ok();
         } catch (Exception e) {
             e.printStackTrace();
@@ -70,8 +70,12 @@ public class UserController {
     public YDResult saveUser(@RequestBody UserBo userBo){
        // todo  前端传过来的参数不能为空
         boolean isCode = userService.checkSmsCode(userBo.getPhone(), userBo.getCode());
-        if (!isCode) {
+        if (isCode==false) {
             return YDResult.errorMsg("验证码输入错误");
+        }
+        boolean b = userService.userCheckRepate(userBo.getPhone());
+        if (b==false){
+            return YDResult.errorMsg("用户名已注册");
         }
         try {
             userBo.setPassword(MD5Utils.getMD5Str(userBo.getPassword()));
@@ -96,9 +100,7 @@ public class UserController {
             users.setPassword(MD5Utils.getMD5Str(users.getPassword()));
             Users usersIct = userService.userLoginByIct(users);
             if (usersIct != null){
-                UserVo userVo = new UserVo();
-                BeanUtils.copyProperties(usersIct,userVo);
-                return YDResult.ok(userVo);
+                return YDResult.ok(usersIct);
             }else {
                 return YDResult.errorMsg("账号或者密码错误");
             }
@@ -119,20 +121,20 @@ public class UserController {
 
     /**
      *  修改密码发送验证码
-     * @param phone
+     * @param users
      * @return
      */
     @RequestMapping(value = "/user/sendCodePassword.do",method = RequestMethod.POST)
-    public YDResult sendCodePassword(String phone){
-        if (StringUtils.isBlank(phone)){
+    public YDResult sendCodePassword(@RequestBody Users users){
+        if (StringUtils.isBlank(users.getPhone())){
             return YDResult.errorMsg("电话号不能为空");
         }
-        boolean isUser = userService.userCheckRepate(phone);
+        boolean isUser = userService.userCheckRepate(users.getPhone());
         if (isUser){
             return YDResult.errorMsg("手机号没有注册");
         }
         try {
-            userService.createSmsCode(phone);
+            userService.createSmsCode(users.getPhone());
             return YDResult.ok();
         } catch (Exception e) {
             e.printStackTrace();

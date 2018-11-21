@@ -10,6 +10,7 @@ import cn.yunding.social.utils.QRCodeUtils;
 import com.alibaba.fastjson.JSON;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.WebResource;
+import org.apache.commons.lang3.StringUtils;
 import org.n3r.idworker.Sid;
 import org.owasp.esapi.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -87,12 +88,15 @@ public class UserServiceimpl implements UserService{
 
     @Override
     public boolean checkSmsCode(String phone, String code) {
-        Object smsCode = redisTemplate.boundHashOps("smsCode").get(phone);
-        if (code.equals(smsCode)){
-            return true;
-        }else {
-            return false;
-        }
+       if (StringUtils.isNotBlank(phone) && StringUtils.isNotBlank(code)){
+           String smsCode = (String) redisTemplate.boundHashOps("smsCode").get(phone);
+           if (code.equals(smsCode)){
+               return true;
+           }else {
+               return false;
+           }
+       }
+       return true;
     }
 
     @Transactional
@@ -119,7 +123,7 @@ public class UserServiceimpl implements UserService{
         // todo 自动生成一个头像
         String faceUrl = IMAGE_URL+"upload/201811161610336754834.jpg";
         users.setFace(faceUrl);
-        users.setNickname(userBo.getNickname());
+        users.setNickname("");
         String ict = (long)(Math.random()*1000000) + "";
         Example example = new Example(Users.class);
         Example.Criteria criteria = example.createCriteria();
