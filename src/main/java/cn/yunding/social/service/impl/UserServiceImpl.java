@@ -36,7 +36,7 @@ import java.util.Map;
  * @Date2018/11/10-16-04
  */
 @Service
-public class UserServiceimpl implements UserService{
+public class UserServiceImpl implements UserService{
 
     @Autowired
     private UsersMapper usersMapper;
